@@ -1,12 +1,14 @@
 import { Component } from "react";
 import { fetchGallery } from "api/api";
-
+import { ImageGalleryItem } from "components/ImageGalleryItem/ImageGalleryItem";
+import { Button } from "components/Button/Button";
 
 const IMAGES_PER_PAGE = 12;
 
 export class ImageGallery extends Component {
     state = {
-        images: []
+      images: [],
+      currentPage:1
     }
 
      componentDidUpdate(prevProps) {
@@ -16,23 +18,34 @@ export class ImageGallery extends Component {
 }
 
     fetchImages = async () => {
+    const { query } = this.props;
+    const { currentPage, images } = this.state;
     try {
-      const data = await fetchGallery(this.props.query, IMAGES_PER_PAGE);
-      this.setState({ images: data.hits });
+      const data = await fetchGallery(query, currentPage, IMAGES_PER_PAGE);
+      this.setState({
+        images: [...images, ...data.hits],
+        currentPage: currentPage + 1,
+      });
     } catch (error) {
-      console.error("Error fetching images:", error);
+      console.error('Error fetching images:', error);
     }
   };
-    
+
+  handleLoadMore = () => {
+    this.fetchImages();
+  };
+  
+  
     render() {
         const { images } = this.state;
-        return (
-            <ul className="gallery">
-{images.map((image) => ( <li key={image.id}>
-            <img src={image.webformatURL} alt="" />
-          </li>
-        ))}
-</ul>
-        )
+      return (
+        <>
+        <ul className="gallery">
+          {images.map((image) => (<ImageGalleryItem key={image.id} image={image} />
+          ))}
+        </ul>
+          <Button onClick={this.handleLoadMore} showButton={images.length > 0} />
+          </>
+      );
     }
 }
