@@ -10,7 +10,8 @@ export class Searchbar extends Component {
     }
     handleChange = (e) => {
         this.setState({ query: e.target.value });
-}
+    }
+    
     render() {
         return (
             <header className="searchbar">

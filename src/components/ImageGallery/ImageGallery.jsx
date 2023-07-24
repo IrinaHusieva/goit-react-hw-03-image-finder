@@ -2,13 +2,15 @@ import { Component } from "react";
 import { fetchGallery } from "api/api";
 import { ImageGalleryItem } from "components/ImageGalleryItem/ImageGalleryItem";
 import { Button } from "components/Button/Button";
+import { Circles } from 'react-loader-spinner'
 
 const IMAGES_PER_PAGE = 12;
 
 export class ImageGallery extends Component {
     state = {
       images: [],
-      currentPage:1
+      currentPage: 1,
+      isLoading: false
     }
 
      componentDidUpdate(prevProps) {
@@ -19,16 +21,18 @@ export class ImageGallery extends Component {
 
     fetchImages = async () => {
     const { query } = this.props;
-    const { currentPage, images } = this.state;
-    try {
-      const data = await fetchGallery(query, currentPage, IMAGES_PER_PAGE);
-      this.setState({
-        images: [...images, ...data.hits],
-        currentPage: currentPage + 1,
-      });
-    } catch (error) {
-      console.error('Error fetching images:', error);
-    }
+      const { currentPage, images } = this.state;
+      this.setState({ isLoading: true });
+      try {
+        const data = await fetchGallery(query, currentPage, IMAGES_PER_PAGE);
+        this.setState({
+          images: [...images, ...data.hits],
+          currentPage: currentPage + 1,
+        });
+      } catch (error) {
+        console.error('Error fetching images:', error);
+      }
+      finally { this.setState({ isLoading: false }) }
   };
 
   handleLoadMore = () => {
@@ -37,14 +41,31 @@ export class ImageGallery extends Component {
   
   
     render() {
-        const { images } = this.state;
+      const { images, isLoading } = this.state;
       return (
         <>
         <ul className="gallery">
           {images.map((image) => (<ImageGalleryItem key={image.id} image={image} />
           ))}
-        </ul>
+          </ul>
+          {isLoading && ( 
+          <div className="loader">
+            <Circles
+            height="80"
+            width="80"
+        color="#4fa94d"
+        ariaLabel="circles-loading"
+        wrapperStyle={{}}
+        wrapperClass=""
+        visible={true}
+/>
+          </div>
+        )}
+        {!isLoading && ( 
           <Button onClick={this.handleLoadMore} showButton={images.length > 0} />
+        )}
+
+        
           </>
       );
     }

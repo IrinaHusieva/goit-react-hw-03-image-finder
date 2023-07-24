@@ -8,11 +8,13 @@ export class App extends Component {
   };
   handleSubmit = (query) => {
     this.setState({ query });
+    
   }
+   
   render() {
     return (
       <>
-        <Searchbar onSubmit={this.handleSubmit}></Searchbar>
+        <Searchbar onSubmit={this.handleSubmit} ></Searchbar>
         <ImageGallery query={this.state.query}></ImageGallery>
       </>
   )
