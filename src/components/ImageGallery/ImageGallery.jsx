@@ -2,7 +2,7 @@ import { Component } from "react";
 import { fetchGallery } from "api/api";
 import { ImageGalleryItem } from "components/ImageGalleryItem/ImageGalleryItem";
 import { Button } from "components/Button/Button";
-import { Circles } from 'react-loader-spinner';
+import Loader from "components/Loader/Loader";
 import styled from './ImageGallery.module.css'
 
 const IMAGES_PER_PAGE = 12;
@@ -15,10 +15,18 @@ export class ImageGallery extends Component {
     }
 
      componentDidUpdate(prevProps) {
-  if (this.props.query !== prevProps.query && this.props.query !== "") {
-    this.fetchImages(); 
+       if (this.props.query !== prevProps.query && this.props.query !== "") {
+     this.resetImages();
+     this.fetchImages(); 
   }
-}
+  }
+   resetImages = () => {
+    this.setState({
+      images: [],
+      currentPage: 1,
+      isLoading: false,
+    });
+  };
 
     fetchImages = async () => {
     const { query } = this.props;
@@ -46,20 +54,12 @@ export class ImageGallery extends Component {
       return (
         <>
         <ul className={styled.ImageGallery}>
-          {images.map((image) => (<ImageGalleryItem key={image.id} image={image} />
+          {images.map((image) => (<ImageGalleryItem key={image.id} image={image}/>
           ))}
           </ul>
           {isLoading && ( 
           <div className="loader">
-            <Circles
-            height="80"
-            width="80"
-        color="#4fa94d"
-        ariaLabel="circles-loading"
-        wrapperStyle={{}}
-        wrapperClass=""
-        visible={true}
-/>
+              <Loader/>
           </div>
         )}
         {!isLoading && ( 

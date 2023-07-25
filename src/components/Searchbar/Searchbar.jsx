@@ -8,6 +8,7 @@ export class Searchbar extends Component {
     handleSubmit = e => {
         e.preventDefault();
         this.props.onSubmit(this.state.query);
+        this.setState({ query: '' });
     }
     handleChange = (e) => {
         this.setState({ query: e.target.value });
