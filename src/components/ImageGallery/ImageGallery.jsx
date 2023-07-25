@@ -2,7 +2,8 @@ import { Component } from "react";
 import { fetchGallery } from "api/api";
 import { ImageGalleryItem } from "components/ImageGalleryItem/ImageGalleryItem";
 import { Button } from "components/Button/Button";
-import { Circles } from 'react-loader-spinner'
+import { Circles } from 'react-loader-spinner';
+import styled from './ImageGallery.module.css'
 
 const IMAGES_PER_PAGE = 12;
 
@@ -44,7 +45,7 @@ export class ImageGallery extends Component {
       const { images, isLoading } = this.state;
       return (
         <>
-        <ul className="gallery">
+        <ul className={styled.ImageGallery}>
           {images.map((image) => (<ImageGalleryItem key={image.id} image={image} />
           ))}
           </ul>
