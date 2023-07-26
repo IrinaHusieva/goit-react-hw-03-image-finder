@@ -11,7 +11,7 @@ const Loader = () => {
                 ariaLabel="circles-loading"
         wrapperStyle={{
         }}
-        // wrapperClass={styled.loader}
+        wrapperClass={styled.loader}
         visible={true}
 />
   );
