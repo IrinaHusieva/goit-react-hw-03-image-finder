@@ -15,8 +15,8 @@ export const ImageGalleryItem = ({ image }) => {
 
   return (
     <>
-      <li key={image.id} image={image} className={styled.imageGalleryItem}>
-        <img className={styled.imageGalleryItemImage} src={image.webformatURL} alt="" onClick={handleOpenModal} />
+      <li key={image.id} image={image} className={styled.ImageGalleryItem}>
+        <img className={styled.ImageGalleryItemImage} src={image.webformatURL} alt="" onClick={handleOpenModal} />
       </li>
       {isModalOpen && (
         <Modal largeImageURL={image.largeImageURL} onClose={handleCloseModal} />
