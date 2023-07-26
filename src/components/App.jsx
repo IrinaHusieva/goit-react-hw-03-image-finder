@@ -5,7 +5,6 @@ import { fetchGallery } from "api/api";
 import { Button } from "components/Button/Button";
 import Loader from "components/Loader/Loader";
 import styled from './app.module.css';
-import PropTypes from "prop-types";
 
 const IMAGES_PER_PAGE = 12;
 export class App extends Component {
@@ -17,18 +16,18 @@ export class App extends Component {
     totalHits: 0,
   };
 
-  componentDidUpdate(prevState) {
-    if (
-      this.state.query !== prevState.query ||
-      this.state.currentPage !== prevState.currentPage
-    ) {
-      this.fetchImages();
-    }
-   if (!prevState.totalHits && this.state.totalHits !== prevState.totalHits) {
-      this.setState({ maxPage: Math.ceil(this.state.totalHits / IMAGES_PER_PAGE) });
-    }
+  componentDidUpdate(prevProps, prevState) {
+  if (
+    this.state.query !== prevState.query ||
+    this.state.currentPage !== prevState.currentPage
+  ) {
+    this.fetchImages();
   }
-
+  if (this.state.totalHits !== prevState.totalHits) {
+    this.setState({ maxPage: Math.ceil(this.state.totalHits / IMAGES_PER_PAGE) });
+  }
+  }
+  
   fetchImages = async () => {
     const { currentPage, images, query } = this.state;
     this.setState({ isLoading: true });

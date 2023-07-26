@@ -25,3 +25,10 @@ export const ImageGalleryItem = ({ image }) => {
     </>
   );
 };
+
+ImageGalleryItem.propTypes = {
+  image: PropTypes.shape({
+    webformatURL: PropTypes.string.isRequired,
+    largeImageURL: PropTypes.string.isRequired,
+  }).isRequired,
+};

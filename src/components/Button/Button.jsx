@@ -1,6 +1,7 @@
 
 import React from 'react';
 import styled from './Button.module.css';
+import PropTypes from "prop-types";
 
 
 export const Button = ({ onClick, showButton }) => {
@@ -11,4 +12,8 @@ export const Button = ({ onClick, showButton }) => {
       </button>
       </div>
   ) : null;
+};
+
+Button.propTypes = {
+  onClick: PropTypes.func.isRequired,
 };

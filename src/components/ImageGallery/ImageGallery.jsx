@@ -17,3 +17,10 @@ export class ImageGallery extends Component {
     );
   }
 }
+ImageGallery.propTypes = {
+  images: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+    })
+  ).isRequired,
+};
