@@ -4,7 +4,8 @@ import { ImageGallery } from "./ImageGallery/ImageGallery";
 import { fetchGallery } from "api/api";
 import { Button } from "components/Button/Button";
 import Loader from "components/Loader/Loader";
-import styled from './app.module.css'
+import styled from './app.module.css';
+import PropTypes from "prop-types";
 
 const IMAGES_PER_PAGE = 12;
 export class App extends Component {
@@ -81,3 +82,4 @@ export class App extends Component {
     );
   }
 }
+
